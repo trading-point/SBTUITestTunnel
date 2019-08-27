@@ -58,7 +58,6 @@ extern NSString * _Nonnull const SBTUITunnelCookieBlockMatchRuleKey;
 extern NSString * _Nonnull const SBTUITunnelCookieBlockQueryIterationsKey;
 
 extern NSString * _Nonnull const SBTUITunnelObjectKey;
-extern NSString * _Nonnull const SBTUITunnelObjectValueKey;
 extern NSString * _Nonnull const SBTUITunnelObjectKeyKey;
 
 extern NSString * _Nonnull const SBTUITunnelUserDefaultSuiteNameKey;
@@ -122,11 +121,6 @@ extern NSString * _Nonnull const SBTUITunneledApplicationCommandDownloadData;
 extern NSString * _Nonnull const SBTUITunneledApplicationCommandShutDown;
 
 extern NSString * _Nonnull const SBTUITunneledApplicationCommandStartupCommandsCompleted;
-
-extern NSString * _Nonnull const SBTUITunneledApplicationCommandXCUIExtensionScrollTableView;
-extern NSString * _Nonnull const SBTUITunneledApplicationCommandXCUIExtensionScrollCollectionView;
-extern NSString * _Nonnull const SBTUITunneledApplicationCommandXCUIExtensionScrollScrollView;
-extern NSString * _Nonnull const SBTUITunneledApplicationCommandXCUIExtensionForceTouchView;
 
 extern NSString * _Nonnull const SBTUITunneledNSURLProtocolHTTPBodyKey;
 

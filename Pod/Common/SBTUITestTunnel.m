@@ -57,7 +57,6 @@ NSString * const SBTUITunnelCookieBlockMatchRuleKey = @"rule";
 NSString * const SBTUITunnelCookieBlockQueryIterationsKey = @"iterations";
 
 NSString * const SBTUITunnelObjectKey = @"obj";
-NSString * const SBTUITunnelObjectValueKey = @"obj_value";
 NSString * const SBTUITunnelObjectKeyKey = @"key";
 
 NSString * const SBTUITunnelUserDefaultSuiteNameKey = @"suite_name";
@@ -121,11 +120,6 @@ NSString * const SBTUITunneledApplicationCommandDownloadData = @"commandDownload
 NSString * const SBTUITunneledApplicationCommandShutDown = @"commandShutDown";
 
 NSString * const SBTUITunneledApplicationCommandStartupCommandsCompleted = @"commandStartupCompleted";
-
-NSString * const SBTUITunneledApplicationCommandXCUIExtensionScrollTableView = @"commandScrollTableView";
-NSString * const SBTUITunneledApplicationCommandXCUIExtensionScrollCollectionView = @"commandScrollCollectionView";
-NSString * const SBTUITunneledApplicationCommandXCUIExtensionScrollScrollView = @"commandScrollScrollView";
-NSString * const SBTUITunneledApplicationCommandXCUIExtensionForceTouchView = @"commandForceTouchPopView";
 
 NSString * const SBTUITunneledNSURLProtocolHTTPBodyKey = @"SBTUITunneledNSURLProtocolHTTPBodyKey";
 

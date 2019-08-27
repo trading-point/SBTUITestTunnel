@@ -108,6 +108,9 @@ static NSTimeInterval SBTUITunneledApplicationDefaultTimeout = 30.0;
 
 - (void)launchTunnelWithStartupBlock:(void (^)(void))startupBlock
 {
+    self.initialLaunchArguments = self.application.launchArguments;
+    self.initialLaunchEnvironment = self.application.launchEnvironment;
+
     NSMutableArray *launchArguments = [self.application.launchArguments mutableCopy];
     [launchArguments addObject:SBTUITunneledApplicationLaunchSignal];
 
@@ -137,7 +140,7 @@ static NSTimeInterval SBTUITunneledApplicationDefaultTimeout = 30.0;
     [self shutDownWithError:nil];
 }
 
-- (void)terminate
+- (void)terminateTunnel
 {
     [self shutDownWithError:nil];
 }
@@ -673,48 +676,6 @@ static NSTimeInterval SBTUITunneledApplicationDefaultTimeout = 30.0;
     return _userInterfaceAnimationSpeed;
 }
 
-#pragma mark - XCUITest extensions
-
-- (BOOL)scrollTableViewWithIdentifier:(nonnull NSString *)identifier toRow:(NSInteger)row
-{
-    NSAssert([identifier length] > 0, @"Invalid empty identifier!");
-    
-    NSDictionary<NSString *, NSString *> *params = @{SBTUITunnelObjectKey: identifier,
-                                                     SBTUITunnelObjectValueKey: [@(row) stringValue]};
-    
-    return [[self sendSynchronousRequestWithPath:SBTUITunneledApplicationCommandXCUIExtensionScrollTableView params:params] boolValue];
-}
-
-- (BOOL)scrollCollectionViewWithIdentifier:(nonnull NSString *)identifier toRow:(NSInteger)row
-{
-    NSAssert([identifier length] > 0, @"Invalid empty identifier!");
-    
-    NSDictionary<NSString *, NSString *> *params = @{SBTUITunnelObjectKey: identifier,
-                                                     SBTUITunnelObjectValueKey: [@(row) stringValue]};
-    
-    return [[self sendSynchronousRequestWithPath:SBTUITunneledApplicationCommandXCUIExtensionScrollCollectionView params:params] boolValue];
-}
-
-- (BOOL)scrollScrollViewWithIdentifier:(nonnull NSString *)identifier toElementWitIdentifier:(nonnull NSString *)targetIdentifier
-{
-    NSAssert([identifier length] > 0, @"Invalid empty identifier!");
-    NSAssert([targetIdentifier length] > 0, @"Invalid empty target identifier!");
-    
-    NSDictionary<NSString *, NSString *> *params = @{SBTUITunnelObjectKey: identifier,
-                                                     SBTUITunnelObjectValueKey: targetIdentifier};
-    
-    return [[self sendSynchronousRequestWithPath:SBTUITunneledApplicationCommandXCUIExtensionScrollScrollView params:params] boolValue];
-}
-
-- (BOOL)forcePressViewWithIdentifier:(nonnull NSString *)identifier
-{
-    NSAssert([identifier length] > 0, @"Invalid empty identifier!");
-    
-    NSDictionary<NSString *, NSString *> *params = @{SBTUITunnelObjectKey: identifier };
-    
-    return [[self sendSynchronousRequestWithPath:SBTUITunneledApplicationCommandXCUIExtensionForceTouchView params:params] boolValue];
-}
-
 #pragma mark - Helper Methods
 
 - (NSString *)base64SerializeObject:(id)obj
@@ -790,10 +751,6 @@ static NSTimeInterval SBTUITunneledApplicationDefaultTimeout = 30.0;
     __block NSString *responseId = nil;
     
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error.code == -1022) {
-            NSAssert(NO, @"Check that ATS security policy is properly setup, refer to documentation");
-        }
-        
         if (![response isKindOfClass:[NSHTTPURLResponse class]]) {
             if (assertOnError) {
                 NSLog(@"[SBTUITestTunnel] Failed to get http response: %@", request);
