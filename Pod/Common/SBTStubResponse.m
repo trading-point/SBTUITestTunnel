@@ -94,6 +94,8 @@ static NSString *defaultNSDataContentType;
                 _contentType = defaultNSStringContentType;
             } else if ([response isKindOfClass:[NSDictionary class]]) {
                 _contentType = defaultNSDictionaryContentType;
+            } else if ([response isKindOfClass:[NSArray class]]) {
+                _contentType = defaultJsonMime;
             }
         }
         
@@ -109,6 +111,13 @@ static NSString *defaultNSDataContentType;
                                                     options:NSJSONWritingPrettyPrinted
                                                       error:&error];
             
+            NSAssert(!error && _data, @"Failed to convert dictionary to json!");
+        } else if ([response isKindOfClass:[NSArray class]] && [_contentType isEqualToString:defaultJsonMime]) {
+            NSError *error;
+            _data = [NSJSONSerialization dataWithJSONObject:(NSArray *)response
+                                                    options:NSJSONWritingPrettyPrinted
+                                                      error:&error];
+
             NSAssert(!error && _data, @"Failed to convert dictionary to json!");
         }
         
