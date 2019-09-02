@@ -101,12 +101,7 @@
 
 - (void)terminate
 {
-    [self terminateTunnel];
-}
-
-- (void)terminateTunnel
-{
-    [self.client terminateTunnel];
+    [self.client terminate];
 }
 
 #pragma mark - Timeout
@@ -366,6 +361,28 @@
 - (NSInteger)userInterfaceAnimationSpeed
 {
     return [self.client userInterfaceAnimationSpeed];
+}
+
+#pragma mark - XCUITest extensions
+
+- (BOOL)scrollTableViewWithIdentifier:(nonnull NSString *)identifier toRow:(NSInteger)row
+{
+    return [self.client scrollTableViewWithIdentifier:identifier toRow:row];
+}
+
+- (BOOL)scrollCollectionViewWithIdentifier:(nonnull NSString *)identifier toRow:(NSInteger)row
+{
+    return [self.client scrollCollectionViewWithIdentifier:identifier toRow:row];
+}
+
+- (BOOL)scrollScrollViewWithIdentifier:(nonnull NSString *)identifier toElementWitIdentifier:(NSString *)targetIdentifier
+{
+    return [self.client scrollScrollViewWithIdentifier:identifier toElementWitIdentifier:targetIdentifier];
+}
+
+- (BOOL)forcePressViewWithIdentifier:(NSString *)identifier
+{
+    return [self.client forcePressViewWithIdentifier:identifier];
 }
 
 @end
